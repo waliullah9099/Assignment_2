@@ -23,4 +23,4 @@ const usersSchema = new Schema<Users>({
   address: UserAddressSchema,
 });
 
-const Users = model<Users>('User', usersSchema);
+export const UsersModel = model<Users>('User', usersSchema);
