@@ -46,15 +46,40 @@ const getSingleUser = async (req: Request, res: Response) => {
     const result = await userServices.getSingleUserFromDb(id);
     res.status(200).json({
       success: true,
-      message: 'User created successfully!',
+      message: 'get user data successfully!',
       data: result,
     });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
-    res.status(500).json({
+    res.status(404).json({
       success: false,
-      message: err.message || 'users data not found',
-      error: err,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
+    });
+  }
+};
+
+const deleteSingleUser = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await userServices.deletSingleUserFromDb(id);
+    res.status(200).json({
+      success: true,
+      message: 'User deleted successfully!',
+      data: result,
+    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    res.status(404).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
     });
   }
 };
@@ -63,4 +88,5 @@ export const userController = {
   createUser,
   getUsers,
   getSingleUser,
+  deleteSingleUser,
 };

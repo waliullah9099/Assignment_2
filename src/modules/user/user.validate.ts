@@ -20,9 +20,10 @@ const UsersValidationSchema = z.object({
   fullName: UserFullNameValidationSchema,
   age: z.number(),
   email: z.string().email({ message: 'invalid email' }),
-  isActive: z.enum(['true', 'false']),
+  isActive: z.boolean(),
   hobbies: z.array(z.string()),
   address: UserAddressValidationSchema,
+  isDeleted: z.boolean(),
 });
 
 export default UsersValidationSchema;

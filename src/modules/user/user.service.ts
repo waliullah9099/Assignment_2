@@ -1,28 +1,26 @@
-import { UserModel } from '../user.model';
-import { User } from './user.interface';
+import { User } from '../user.model';
+import { TUser } from './user.interface';
 
-const createUserFromDb = async (user: User) => {
-  const result = await UserModel.create(user);
+const createUserFromDb = async (user: TUser) => {
+  const result = await User.create(user);
   return result;
 };
 
 const getUsersFromDb = async () => {
-  const result = await UserModel.find();
-
-  // const result = await UserModel.aggregate([
-  //   {$project: {username: 1, fullName: 1, age: 1, email: 1, address: 1}}
-  // ])
+  const result = await User.find();
   return result;
 };
 
 const getSingleUserFromDb = async (id: string) => {
-  const result = await UserModel.findOne({ userId: id });
+  const result = await User.findOne({ userId: id });
 
-  // const result = await UserModel.aggregate([
-  //   { $match: { userId: id } },
-  //   { $project: { username: 1, fullName: 1, age: 1, email: 1, address: 1 } },
-  // ]);
+  // const result = await User.aggregate([{ $match: { userId: id } }]);
 
+  return result;
+};
+
+const deletSingleUserFromDb = async (id: string) => {
+  const result = await User.updateOne({ userId: id }, { isDeleted: true });
   return result;
 };
 
@@ -30,4 +28,5 @@ export const userServices = {
   createUserFromDb,
   getUsersFromDb,
   getSingleUserFromDb,
+  deletSingleUserFromDb,
 };
