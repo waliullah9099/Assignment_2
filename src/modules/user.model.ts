@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { UserAddress, UserFullName, Users } from './users/users.interface';
+import { UserAddress, UserFullName, User } from './user/user.interface';
 
 const UserFullNameSchema = new Schema<UserFullName>({
   firstName: { type: String },
@@ -12,15 +12,16 @@ const UserAddressSchema = new Schema<UserAddress>({
   country: { type: String },
 });
 
-const usersSchema = new Schema<Users>({
-  userId: { type: Number },
+const usersSchema = new Schema<User>({
+  userId: { type: Number, unique: true },
   username: { text: String },
   password: { type: String },
   fullName: UserFullNameSchema,
   age: { type: Number },
-  email: { type: String },
+  email: { type: String, unique: true },
   isActive: ['true', 'false'],
+  hobbies: [String],
   address: UserAddressSchema,
 });
 
-export const UsersModel = model<Users>('User', usersSchema);
+export const UserModel = model<User>('User', usersSchema);
